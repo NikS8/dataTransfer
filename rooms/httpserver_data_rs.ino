@@ -3,8 +3,8 @@
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 String createDataString() {
   
-        ardStruct151 data151;
-    bus.readData(data151);
+   //     struct151 data151;
+    rx.readData(data151);
 
     Serial.println(data151.deviceId);
     Serial.println(data151.hDHT);

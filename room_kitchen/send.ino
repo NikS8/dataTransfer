@@ -1,6 +1,6 @@
-void sendUART()
+void send()
 {
-  ardStruct151 data151;
+  struct151 data151;
 
   data151.deviceId = 151;
   data151.hDHT = hDHT;
@@ -8,7 +8,7 @@ void sendUART()
   data151.freRam = freeRam();
   data151.timeWork = millis();
 
-  bus.sendData(100, data151); // на адрес 100
+  tx.writeData(data151); 
 
   //  Serial.println(data151);
   // Serial.println(freeRam());

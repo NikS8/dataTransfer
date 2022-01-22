@@ -41,10 +41,8 @@
 #include <SPI.h>
 #include <Ethernet.h>  //  httpServer (40151) pins D10,D11,D12,D13
 
-#include "GBUS.h"       // подключаем GBUS
+#include <GyverTransfer.h>
 // приём данных по однопроводному юарту
-// подключаем софт юарт
-#include "softUART.h"
 
 //  Блок settings  ------------------------------------------------------------
 #include "rooms_init.h"
@@ -61,24 +59,43 @@ void setup() {
 
   httpServerSetup();
 
-  
+  attachInterrupt(0, isr, CHANGE);
+
 }
+
+
+void isr() {
+  // спец. тикер вызывается в прерывании
+  rx.tickISR();
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             loop
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void loop() {
 
   // в тике сидит отправка и приём
-  bus.tick();
-/*
-  if (bus.gotData()) {
-    // выводим данные
-    readUART();
+ // bus.tick();
 
+  // если приняты какие то данные (встроенный таймаут)
+  if (rx.gotData()) {
+
+    // прочитать данные, если они
+    // приняты корректно и соответствуют размеру
+//    if (rx.readDataCRC(data)) {
+    if (rx.readData(data151)) {
+      Serial.print(data151.deviceId);
+      Serial.print("   "); 
+       
+      Serial.println();
+    } else {
+      // иначе данные повреждены или не той длины!
+      Serial.println("error");
+      // сами разбираем если нужно
+      // .................      
+    }
+    rx.clearBuffer(); // обязательно вручную чистим буфер
   }
-  */
-  //   httpServer();
-
     realTimeService();
 	resetChecker();
 }

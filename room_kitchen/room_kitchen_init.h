@@ -4,11 +4,9 @@
 //	#include "room_kitchen_init.h"
 //  Блок GBUS UART  -----------------------------------------------------------
 // отправка данных по однопроводному юарту
-softUART<2, GBUS_FULL> UART(2400); // пин 2, скорость 1000
+GyverTransfer<2, GT_TRX, 2400, 20> tx;
 
-GBUS bus(&UART, 151, 20); // обработчик UART, адрес 151, буфер 20 байт
-
-struct ardStruct151 {
+struct struct151 {
   int deviceId = DEVICE_ID;
   int hDHT;
   float tDHT;
