@@ -52,6 +52,9 @@ String createDataString() {
     resultData.concat(F(",\n"));
   resultData.concat(F("upTime: "));
   resultData.concat(upTime(millis()));
+    resultData.concat(F(",\n"));
+  resultData.concat(F("upError: "));
+  resultData.concat(upError);
   resultData.concat(F("\n}"));
 
   return resultData;

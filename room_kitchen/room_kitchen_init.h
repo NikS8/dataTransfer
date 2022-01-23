@@ -4,7 +4,7 @@
 //	#include "room_kitchen_init.h"
 //  Блок GBUS UART  -----------------------------------------------------------
 // отправка данных по однопроводному юарту
-GyverTransfer<2, GT_TRX, 2400, 20> tx;
+GyverTransfer<2, GT_TRX, 2400> tx;
 
 struct struct151 {
   int deviceId = DEVICE_ID;

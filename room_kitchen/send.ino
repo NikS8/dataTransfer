@@ -8,7 +8,7 @@ void send()
   data151.freRam = freeRam();
   data151.timeWork = millis();
 
-  tx.writeData(data151); 
+  tx.writeDataCRC(data151); 
 
   //  Serial.println(data151);
   // Serial.println(freeRam());
