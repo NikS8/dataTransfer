@@ -12,17 +12,13 @@ void realTimeService() {
 
   reqClient.println(F("HTTP/1.1 200 OK"));
   reqClient.println(F("Content-Type: application/json"));
-  reqClient.println(F("Refresh: 15"));
+  reqClient.println(F("Refresh: 10"));
   reqClient.print(F("Content-Length: "));
   reqClient.println(data.length());
   reqClient.println();
   reqClient.print(data);
-/*
-  reqClient.println(F("HTTP/1.1 200 OK"));
-  reqClient.println(F("Content-Type: application/yaml"));
-*/
-  reqClient.println();
-  reqClient.print(data);
+
+  etherClient++;
   
   reqClient.stop();
 }

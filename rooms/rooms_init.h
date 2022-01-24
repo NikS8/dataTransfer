@@ -22,7 +22,7 @@ EthernetServer httpServer(80);
 //  Блок GBUS UART  -----------------------------------------------------------
 // приём данных по однопроводному юарту
 
-//softUART<2, GBUS_FULL> UART(1200); // пин 2, скорость 1000
+//softUART<2, GBUS_FULL> UART(2400); // пин 2, скорость 1000
 
 softUART<2, GBUS_RX> UART(2400); // пин 2, скорость 1200
 
@@ -30,13 +30,17 @@ softUART<2, GBUS_RX> UART(2400); // пин 2, скорость 1200
 
 GBUS bus(&UART, 100, 20); // обработчик UART, адрес 5, буфер 20 байт
 
-struct ardStruct151 {
+struct struct151 {
   int deviceId;
   int hDHT;
   float tDHT;
   int freRam;
   uint32_t timeWork;
 };
+
+int16_t etherClient = 0;
+int16_t errorCRC = 0;
+int16_t valn = 0;
 
 //	Блок TIME  ----------------------------------------------------------------
 #define RESET_UPTIME_TIME 43200000  //  = 30 * 24 * 60 * 60 * 1000 

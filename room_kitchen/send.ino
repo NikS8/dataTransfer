@@ -1,4 +1,4 @@
-void sendUART()
+void send()
 {
   ardStruct151 data151;
 

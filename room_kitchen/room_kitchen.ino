@@ -50,13 +50,13 @@ void loop() {
  // в тике сидит отправка и приём
   bus.tick();
 
-  if (millis() - preMillis > 2000) {
+  if (millis() - preMillis > 5000) {
     preMillis = millis();
 
     thDHT();
     
-    // отправляем каждые 2 секунды
-    sendUART();
+    // отправляем каждые 5 секунды
+    send();
   }
 
 	resetChecker();
