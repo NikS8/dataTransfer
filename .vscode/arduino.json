@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:uno",
-    "port": "/dev/cu.usbmodem141401",
+    "port": "/dev/cu.usbmodem141201",
     "programmer": "arduino:avrisp",
     "sketch": "room_kitchen/room_kitchen.ino"
 }

@@ -6,12 +6,7 @@
 Скетч использует 16998 байт (55%) памяти устройства. Всего доступно 30720 байт.
 Глобальные переменные используют 727 байт (35%) динамической памяти.
 /*****************************************************************************\
-  Сервер rooms выдает данные:
-    от room_kitchen (151):
-    - температуру
-    - давление
-    - количество свободной памяти
-    - время работы
+ 
 /*****************************************************************************/
 
 //  Блок DEVICE  --------------------------------------------------------------
@@ -21,28 +16,6 @@
 #define VERSION 1
 
 //  Блок libraries  -----------------------------------------------------------
-/*
-  Web Server
-
- A simple web server that shows the value of the analog input pins.
- using an Arduino Wiznet Ethernet shield.
-
- Circuit:
- * Ethernet shield attached to pins 10, 11, 12, 13
- * Analog inputs attached to pins A0 through A5 (optional)
-
- created 18 Dec 2009
- by David A. Mellis
- modified 9 Apr 2012
- by Tom Igoe
- modified 02 Sept 2015
- by Arturo Guadalupi
- */
-#include <SPI.h>
-#include <Ethernet.h>  //  httpServer (40151) pins D10,D11,D12,D13
-
-#include <GyverTransfer.h>
-// приём данных по однопроводному юарту
 
 //  Блок settings  ------------------------------------------------------------
 #include "rooms_init.h"
@@ -57,10 +30,8 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Serial.begin(9600)"); 
 
-  httpServerSetup();
-
   attachInterrupt(0, isr, CHANGE);
-
+  rx.setTimeout(100);
 }
 
 
@@ -74,32 +45,16 @@ void isr() {
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void loop() {
 
-  // в тике сидит отправка и приём
- // bus.tick();
-/*
-  // если приняты какие то данные (встроенный таймаут)
-  if (rx.gotData()) {
+//  Serial.println(" ."); 
 
-    // прочитать данные, если они
-    // приняты корректно и соответствуют размеру
-//    if (rx.readDataCRC(data)) {
-    if (rx.readData(data151)) {
-      Serial.print(data151.deviceId);
-      Serial.print("   "); 
-       
-      Serial.println();
-    } else {
-      // иначе данные повреждены или не той длины!
-      Serial.println("error");
-      // сами разбираем если нужно
-      // .................      
-    }
-    rx.clearBuffer(); // обязательно вручную чистим буфер
+   if (rx.available()) {
+
+    Serial.print(rx.readString());
+
+ //     Serial.print(" millis: "); 
+ //     Serial.println(millis()); 
+
   }
-*/
-  read();
-
-  realTimeService();
 
 	resetChecker();
 }
@@ -109,6 +64,7 @@ void loop() {
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
 09.01.2022 v1 UART --> UART
 22.01.2022 v2 GyverTransfer
+01.02.2022 v3 GyverTransfer String
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             end
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\

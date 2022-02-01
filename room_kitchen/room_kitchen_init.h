@@ -4,22 +4,8 @@
 //	#include "room_kitchen_init.h"
 //  Блок GBUS UART  -----------------------------------------------------------
 // отправка данных по однопроводному юарту
-GyverTransfer<2, GT_TRX, 2400> tx;
+GyverTransfer<2, GT_TX, 2400> tx;
 
-struct struct151 {
-  int deviceId = DEVICE_ID;
-  int hDHT;
-  float tDHT;
-  int freRam;
-  uint32_t timeWork;
-};
-
-//  Блок Energy Monitor  ------------------------------------------------------
-/*
-EnergyMonitor emon1;
-EnergyMonitor emon2;
-EnergyMonitor emon3;
-*/
 //  Блок DHT  -----------------------------------------------------------------
 #define pinDHT_VCC 11    // пин VCC сенсора 
 //#define pinDHT_GND 3    // пин GND сенсора 

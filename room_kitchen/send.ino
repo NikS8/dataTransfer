@@ -1,15 +1,30 @@
 void send()
 {
-  struct151 data151;
+ 
+    myDHT.read();
+    hDHT = myDHT.getHumidity();
+    tDHT = myDHT.getTemperature();
+      Serial.print("temp = ");
+      Serial.print(tDHT,1);
+      Serial.print("     hum = ");
+      Serial.println(hDHT);
+      
+  tx.print("device: ");
+  tx.println(DEVICE);
+  tx.print("deviceId: ");
+  tx.println(DEVICE_ID);
 
-  data151.deviceId = 151;
-  data151.hDHT = hDHT;
-  data151.tDHT = tDHT;
-  data151.freRam = freeRam();
-  data151.timeWork = millis();
+  tx.print("temp: ");
+  tx.println(tDHT);
+  
+  tx.print("hum: ");
+  tx.println(hDHT);
+  
+  tx.print("freeRam: ");
+  tx.println(freeRam());
+ 
+  tx.print("upTime: ");
+  tx.println(millis());
 
-  tx.writeDataCRC(data151); 
-
-  //  Serial.println(data151);
   // Serial.println(freeRam());
 }
