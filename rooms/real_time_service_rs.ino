@@ -17,10 +17,6 @@ void realTimeService() {
   reqClient.println(data.length());
   reqClient.println();
   reqClient.print(data);
-/*
-  reqClient.println(F("HTTP/1.1 200 OK"));
-  reqClient.println(F("Content-Type: application/yaml"));
-*/
   reqClient.println();
   reqClient.print(data);
   

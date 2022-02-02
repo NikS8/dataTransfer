@@ -24,7 +24,7 @@ EthernetServer httpServer(80);
 
 //softUART<2, GBUS_FULL> UART(1200); // пин 2, скорость 1000
 
-softUART<2, GBUS_RX> UART(2400); // пин 2, скорость 1200
+softUART<2> UART(4800); // пин 2, скорость 1200
 
 // подключаем GBUS
 

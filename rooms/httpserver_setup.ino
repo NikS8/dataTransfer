@@ -28,7 +28,6 @@ void httpServerSetup() {
   Serial.println(Ethernet.localIP());
 
   Ethernet.begin(mac, ip);
-  
 
 */
   Serial.println(F("Server is ready."));
