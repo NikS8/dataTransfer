@@ -4,24 +4,10 @@
 //	#include "room_kitchen_init.h"
 //  Блок GBUS UART  -----------------------------------------------------------
 // отправка данных по однопроводному юарту
-softUART<2, GBUS_FULL> UART(2400); // пин 2, скорость 1000
+softUART<2> UART(9600); // пин 2, скорость 1000
 
 GBUS bus(&UART, 151, 20); // обработчик UART, адрес 151, буфер 20 байт
 
-struct ardStruct151 {
-  int deviceId = DEVICE_ID;
-  int hDHT;
-  float tDHT;
-  int freRam;
-  uint32_t timeWork;
-};
-
-//  Блок Energy Monitor  ------------------------------------------------------
-/*
-EnergyMonitor emon1;
-EnergyMonitor emon2;
-EnergyMonitor emon3;
-*/
 //  Блок DHT  -----------------------------------------------------------------
 #define pinDHT_VCC 11    // пин VCC сенсора 
 //#define pinDHT_GND 3    // пин GND сенсора 

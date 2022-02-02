@@ -70,10 +70,19 @@ void loop() {
 
   // в тике сидит отправка и приём
   bus.tick();
-
+ 
+  if (bus.gotRaw()) {
+    // выводим сырые данные
+    for (byte i = 0; i < bus.rawSize(); i++) {
+      byte val = bus.buffer[i];
+      Serial.print(bus.buffer[i]);
+      Serial.print(',');
+    }
+    Serial.println();
+  }
   //   httpServer();
 
-  realTimeService();
+  //realTimeService();
 	
   resetChecker();
 }

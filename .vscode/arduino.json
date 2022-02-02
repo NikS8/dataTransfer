@@ -1,7 +1,6 @@
 {
-    "board": "arduino:avr:mega",
+    "board": "arduino:avr:uno",
     "port": "/dev/cu.usbmodem141201",
     "programmer": "arduino:arduinoisporg",
-    "sketch": "rooms/rooms.ino",
-    "configuration": "cpu=atmega2560"
+    "sketch": "room_kitchen/room_kitchen.ino"
 }
