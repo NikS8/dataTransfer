@@ -9,7 +9,7 @@
 #define GT_STREAM_MODE    // для работы readString и прочих
 
 #include <GyverTransfer.h>
-GyverTransfer<2, GT_RX, 2400, 20> rx;
+GyverTransfer<2, GT_RX, 2400, 4> rx;
 
 //	Блок TIME  ----------------------------------------------------------------
 #define RESET_UPTIME_TIME 43200000  //  = 30 * 24 * 60 * 60 * 1000 

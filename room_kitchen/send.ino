@@ -9,22 +9,22 @@ void send()
       Serial.print("     hum = ");
       Serial.println(hDHT);
       
-  tx.print("device: ");
-  tx.println(DEVICE);
-  tx.print("deviceId: ");
-  tx.println(DEVICE_ID);
 
-  tx.print("temp: ");
-  tx.println(tDHT);
-  
-  tx.print("hum: ");
-  tx.println(hDHT);
-  
-  tx.print("freeRam: ");
-  tx.println(freeRam());
- 
-  tx.print("upTime: ");
-  tx.println(millis());
+String data151;
+  data151 = "device: ";
+  data151 += DEVICE;
+  data151 += ", DEVICE_ID: ";
+  data151 += DEVICE_ID;
+  data151 += ", tempC: ";
+  data151 += tDHT;
+  data151 += ", hum%: ";
+  data151 += hDHT;
+  data151 += ", freeRam: ";
+  data151 += freeRam();
+  data151 += ", millis: ";
+  data151 += millis();
+
+  tx.println(data151);
 
   // Serial.println(freeRam());
 }

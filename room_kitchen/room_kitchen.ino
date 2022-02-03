@@ -18,9 +18,7 @@
 #define VERSION 3
 
 #define GT_PRINT_MODE   // для отправки через print
-//#define GT_CLI        // для лучшей связи на высокой скорости
 #define GT_MICRO_TX     // вырезать код приёмника (оптимизация веса)
-
 //  Блок libraries  -----------------------------------------------------------
 #include <GyverTransfer.h>
 #include "dhtnew.h"
