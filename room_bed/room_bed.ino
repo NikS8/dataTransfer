@@ -6,91 +6,66 @@
 Скетч использует 16998 байт (55%) памяти устройства. Всего доступно 30720 байт.
 Глобальные переменные используют 727 байт (35%) динамической памяти.
 /*****************************************************************************\
-  Сервер rooms выдает данные:
-    от room_kitchen (151):
-    - температуру
-    - давление
-    - количество свободной памяти
-    - время работы
+  Сервер bedbath выдает данные:
+    цифровые:
+датчик температуры и влажности DHT (pin D9)
 /*****************************************************************************/
 
 //  Блок DEVICE  --------------------------------------------------------------
 //  Arduino Pro Mini
-#define DEVICE "rooms"
-#define DEVICE_ID 100
+#define DEVICE "room_kitchen"
+#define DEVICE_ID 151
 #define VERSION 1
 
 //  Блок libraries  -----------------------------------------------------------
-/*
-  Web Server
-
- A simple web server that shows the value of the analog input pins.
- using an Arduino Wiznet Ethernet shield.
-
- Circuit:
- * Ethernet shield attached to pins 10, 11, 12, 13
- * Analog inputs attached to pins A0 through A5 (optional)
-
- created 18 Dec 2009
- by David A. Mellis
- modified 9 Apr 2012
- by Tom Igoe
- modified 02 Sept 2015
- by Arturo Guadalupi
- */
-#include <SPI.h>
-#include <Ethernet.h>  //  httpServer (40151) pins D10,D11,D12,D13
-
 #include "GBUS.h"       // подключаем GBUS
-// приём данных по однопроводному юарту
-// подключаем софт юарт
-#include "softUART.h"
+#include "softUART.h"   // подключаем софт юарт
+#include "dhtnew.h"
 
 //  Блок settings  ------------------------------------------------------------
-#include "rooms_init.h"
+#include "room_kitchen_init.h"
 
 //	end init  -----------------------------------------------------------------
 
- 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             setup
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void setup() {
+  pinMode(pinDHT_VCC, OUTPUT);      // устанавливает режим работы - выход
+
   Serial.begin(9600);
-  Serial.println("Serial.begin(9600)"); 
-
- // httpServerSetup();
-
+  Serial.println("Serial.begin(9600)");
+  Serial.println();
   
+  digitalWrite(pinDHT_VCC, HIGH);   // включает +5v
+  
+ // preMillis = millis();
+
 }
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             loop
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void loop() {
 
-  // в тике сидит отправка и приём
+ // в тике сидит отправка и приём
   bus.tick();
- 
-  if (bus.gotRaw()) {
-    // выводим сырые данные
-    for (byte i = 0; i < bus.rawSize(); i++) {
-      byte val = bus.buffer[i];
-      Serial.print(bus.buffer[i]);
-      Serial.print(',');
-    }
-    Serial.println();
-  }
-  //   httpServer();
 
-  //realTimeService();
-	
-  resetChecker();
+  if (millis() - preMillis > 5000) {
+    preMillis = millis();
+
+    thDHT();
+    
+    // отправляем каждые 5 секунды
+    send();
+  }
+
+	resetChecker();
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             info
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
-09.01.2022 v1 UART <---> UART
+09.01.2022 v1 uart --> uart
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             end
