@@ -6,4 +6,5 @@ void readUART() {
       Serial.print(bus.buffer[i]);
       Serial.print(',');
 }
+
 }
