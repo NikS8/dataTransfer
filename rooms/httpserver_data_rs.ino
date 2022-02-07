@@ -2,7 +2,7 @@
             createDataString
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 String createDataString() {
-  
+  /*
    //     struct151 data151;
     rx.readData(data151);
 
@@ -58,6 +58,7 @@ String createDataString() {
   resultData.concat(F("\n}"));
 
   return resultData;
+  */
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

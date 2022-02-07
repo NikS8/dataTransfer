@@ -1,6 +1,7 @@
 {
-    "board": "arduino:avr:uno",
-    "port": "/dev/cu.usbmodem141401",
+    "board": "arduino:avr:pro",
+    "port": "/dev/cu.SLAB_USBtoUART",
     "programmer": "arduino:avrisp",
-    "sketch": "room_kitchen/room_kitchen.ino"
+    "sketch": "rooms/rooms.ino",
+    "configuration": "cpu=16MHzatmega328"
 }

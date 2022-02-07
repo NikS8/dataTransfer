@@ -2,7 +2,7 @@
             settings bedbath
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //	#include "room_kitchen_init.h"
-//  Блок GBUS   -----------------------------------------------------------
+//  Блок GBUS UART  -----------------------------------------------------------
 // принимаем запрос и отправляем в ответ данные с АЦП
 
 #define GT_STREAM_MODE  // STREAM_MODE нужен для работы GBUS
@@ -10,14 +10,8 @@
 GyverTransfer<2, GT_TRX, 1200> trans;
 
 #include "GBUS.h"
-GBUS bus(&trans, DEVICE_ID, 20);  // адрес 3, буфер 20 байт
+GBUS bus(&trans, DEVICE_ID, 20);  // адрес 151, буфер 20 байт
 
-//  Блок Energy Monitor  ------------------------------------------------------
-/*
-EnergyMonitor emon1;
-EnergyMonitor emon2;
-EnergyMonitor emon3;
-*/
 //  Блок DHT  -----------------------------------------------------------------
 #define pinDHT_VCC 11    // пин VCC сенсора 
 //#define pinDHT_GND 3    // пин GND сенсора 

@@ -13,16 +13,16 @@
 
 //  Блок DEVICE  --------------------------------------------------------------
 //  Arduino Pro Mini
-#define DEVICE "room_kitchen"
-#define DEVICE_ID 151
+#define DEVICE "room_bad"
+#define DEVICE_ID 152
 #define VERSION 1
 
 //  Блок libraries  -----------------------------------------------------------
-#include <mString.h>
+//#include <mString.h>
 #include "dhtnew.h"
 
 //  Блок settings  ------------------------------------------------------------
-#include "room_kitchen_init.h"
+#include "room_bad_init.h"
 
 //	end init  -----------------------------------------------------------------
 
@@ -37,19 +37,20 @@ void setup() {
   Serial.println();
   
   digitalWrite(pinDHT_VCC, HIGH);   // включает +5v
-  
-  attachInterrupt(0, isr, CHANGE);
 
+    attachInterrupt(0, isr, CHANGE);
+
+  
  // preMillis = millis();
 
 }
-
 
 
 // GyverTransfer читает в прерывании
 void isr() {
   trans.tickISR();
 }
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             loop
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
@@ -68,7 +69,7 @@ void loop() {
 
     // ИЛИ отправили дату в ответ
 
-    thDHT();
+ //   thDHT();
     
     // отправляем каждые 2 секунды
     send();

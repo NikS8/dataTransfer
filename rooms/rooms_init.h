@@ -19,19 +19,15 @@ IPAddress ip(192, 168, 0, 100);
 EthernetServer httpServer(80);
 //EthernetServer httpServer(40100);
 
-//  Блок GBUS UART  -----------------------------------------------------------
-// приём данных по однопроводному юарту
-GyverTransfer<2, GT_TRX, 2400, 20> rx;
+//  Блок GBUS   -----------------------------------------------------------
+// отправляем запрос с подтверждением
 
-struct struct151 {
-  int deviceId;
-  int hDHT;
-  float tDHT;
-  int freRam;
-  uint32_t timeWork;
-};
-struct151 data151;
+#define GT_STREAM_MODE  // STREAM_MODE нужен для работы GBUS
+#include <GyverTransfer.h>
+GyverTransfer<2, GT_TRX, 1200> trans;
 
+#include "GBUS.h"
+GBUS bus(&trans, DEVICE_ID, 20);  // адрес 5, буфер 20 байт
 //	Блок TIME  ----------------------------------------------------------------
 #define RESET_UPTIME_TIME 43200000  //  = 30 * 24 * 60 * 60 * 1000 
 // reset after 30 days uptime

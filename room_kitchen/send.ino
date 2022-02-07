@@ -1,14 +1,21 @@
 void send()
 {
-  struct151 data151;
+//  struct151 data151;
+byte data151;
+ // mString<50> data151;
+ // data151 = "";
 
-  data151.deviceId = 151;
-  data151.hDHT = hDHT;
-  data151.tDHT = tDHT;
-  data151.freRam = freeRam();
-  data151.timeWork = millis();
+ // data151 = DEVICE_ID;
+  data151 = hDHT;
+//  data151 += tDHT;
+//  data151 += freeRam();
+//  data151 += millis();
 
-  tx.writeDataCRC(data151); 
+//  trans.writeData(data151); 
+   Serial.print("sending: ");
+    Serial.println(data151);
+    bus.sendData(bus.getTXaddress(), data151);
+//  data151 = "";
 
   //  Serial.println(data151);
   // Serial.println(freeRam());

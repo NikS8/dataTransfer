@@ -19,6 +19,8 @@
 #define DEVICE "rooms"
 #define DEVICE_ID 100
 #define VERSION 1
+#define DEVICE_FROM_151 151
+#define DEVICE_FROM_152 152
 
 //  Блок libraries  -----------------------------------------------------------
 /*
@@ -41,8 +43,8 @@
 #include <SPI.h>
 #include <Ethernet.h>  //  httpServer (40151) pins D10,D11,D12,D13
 
-#include <GyverTransfer.h>
-// приём данных по однопроводному юарту
+#include <mString.h>
+
 
 //  Блок settings  ------------------------------------------------------------
 #include "rooms_init.h"
@@ -57,49 +59,97 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Serial.begin(9600)"); 
 
-  httpServerSetup();
+//  httpServerSetup();
 
+ // прерывания по CHANGE для приёма
   attachInterrupt(0, isr, CHANGE);
-
 }
 
-
+// GyverTransfer читает в прерывании
 void isr() {
-  // спец. тикер вызывается в прерывании
-  rx.tickISR();
+  trans.tickISR();
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             loop
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void loop() {
+  // здесь принимаются данные
+  // если это аппаратный сериал - слишком часто его опрашивать даже не нужно
+  bus.tick();
 
-  // в тике сидит отправка и приём
- // bus.tick();
-/*
-  // если приняты какие то данные (встроенный таймаут)
-  if (rx.gotData()) {
-
-    // прочитать данные, если они
-    // приняты корректно и соответствуют размеру
-//    if (rx.readDataCRC(data)) {
-    if (rx.readData(data151)) {
-      Serial.print(data151.deviceId);
-      Serial.print("   "); 
-       
-      Serial.println();
-    } else {
-      // иначе данные повреждены или не той длины!
-      Serial.println("error");
-      // сами разбираем если нужно
-      // .................      
-    }
-    rx.clearBuffer(); // обязательно вручную чистим буфер
+  // отправляем запрос на адрес 3 каждые 5 секунд
+  static uint32_t tmr;
+  if (millis() - tmr > 5000) {
+    tmr = millis();
+    Serial.println("send request");
+    bus.sendRequest(DEVICE_FROM_151);
   }
-*/
-  read();
+    // отправляем запрос на адрес 3 каждые 5 секунд
+  static uint32_t tmr13;
+ if (millis() - tmr13 > 7000) {
+    tmr13 = millis();
+    Serial.println("send request");
+    bus.sendRequest(DEVICE_FROM_152);
+  }
+ // mString<50> data151;
+ // data151 = "";
 
-  realTimeService();
+  // ждём ответа от 3
+  // пытаемся достучаться через таймаут 500мс 3 раза
+  byte state151 = bus.waitAck(DEVICE_FROM_151, 3, 500);
+  switch (state151) {
+    case ACK_IDLE: //Serial.println("idle");
+      break;
+    case ACK_WAIT: //Serial.println("wait");
+      break;
+    case ACK_ERROR: Serial.println("ack error");
+      break;
+    case ACK_ONLY: Serial.println("got ack");
+      break;
+    case ACK_DATA: Serial.print("got data: ");
+      // читаем и выводим
+      byte data151;
+      bus.readData(data151);
+      Serial.println(data151);
+
+          Serial.print("request from: ");
+    Serial.println(bus.getTXaddress());
+  data151 = "";
+
+      break;
+  }
+
+//  mString<50> data152;
+  //data152 = "";
+
+  // ждём ответа от 13
+  // пытаемся достучаться через таймаут 500мс 3 раза
+  byte state152 = bus.waitAck(DEVICE_FROM_152, 3, 500);
+  switch (state152) {
+    case ACK_IDLE: //Serial.println("idle");
+      break;
+    case ACK_WAIT: //Serial.println("wait");
+      break;
+    case ACK_ERROR: Serial.println("ack error");
+      break;
+    case ACK_ONLY: Serial.println("got ack");
+      break;
+    case ACK_DATA: Serial.print("got data: ");
+      // читаем и выводим
+      byte data152;
+      trans.readData(data152);
+      Serial.println(data152);
+
+          Serial.print("request from: ");
+    Serial.println(bus.getTXaddress());
+
+      break;
+  }
+
+//  read();
+
+//  realTimeService();
 
 	resetChecker();
 }
