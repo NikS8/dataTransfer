@@ -13,8 +13,8 @@
 
 //  Блок DEVICE  --------------------------------------------------------------
 //  Arduino Pro Mini
-#define DEVICE "room_kitchen"
-#define DEVICE_ID 151
+#define DEVICE "room_bed"
+#define DEVICE_ID 152
 #define VERSION 1
 
 //  Блок libraries  -----------------------------------------------------------
@@ -23,7 +23,7 @@
 #include "dhtnew.h"
 
 //  Блок settings  ------------------------------------------------------------
-#include "room_kitchen_init.h"
+#include "room_bed_init.h"
 
 //	end init  -----------------------------------------------------------------
 
@@ -50,7 +50,7 @@ void loop() {
  // в тике сидит отправка и приём
   bus.tick();
 
-  if (millis() - preMillis > 5000) {
+  if (millis() - preMillis > 10000) {
     preMillis = millis();
 
     thDHT();

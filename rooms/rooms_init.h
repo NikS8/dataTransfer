@@ -24,11 +24,11 @@ EthernetServer httpServer(80);
 
 //softUART<2, GBUS_FULL> UART(2400); // пин 2, скорость 1000
 
-softUART<2> UART(9600); // пин 2, скорость 1200
+softUART<2> UART(4800); // пин 2, скорость 1200
 
 // подключаем GBUS
 
-GBUS bus(&UART, 100, 20); // обработчик UART, адрес 5, буфер 20 байт
+GBUS bus(&UART, 100, 200); // обработчик UART, адрес 5, буфер 20 байт
 
 int16_t etherClient = 0;
 int16_t errorCRC = 0;

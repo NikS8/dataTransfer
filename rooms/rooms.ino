@@ -70,7 +70,7 @@ void loop() {
 
   // в тике сидит отправка и приём
   bus.tick();
- 
+ int32_t inMicros = micros();
   if (bus.gotRaw()) {
     // выводим сырые данные
     for (byte i = 0; i < bus.rawSize(); i++) {
@@ -78,7 +78,11 @@ void loop() {
       Serial.print(bus.buffer[i]);
       Serial.print(',');
     }
-    Serial.println();
+          Serial.println();
+
+    int32_t outMicros = micros();
+    Serial.print("     outMicros - inMicros = ");
+    Serial.println(outMicros - inMicros);
   }
   //   httpServer();
 

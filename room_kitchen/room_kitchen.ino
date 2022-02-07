@@ -50,7 +50,7 @@ void loop() {
  // в тике сидит отправка и приём
   bus.tick();
 
-  if (millis() - preMillis > 5000) {
+  if (millis() - preMillis > 10000) {
     preMillis = millis();
 
     thDHT();
