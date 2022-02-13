@@ -1,19 +1,23 @@
 void send()
 {
 //byte data152;
-  String data152;
-  data152 = 152;
+  String data;
+ // data = "151";
 
-//  data152 = DEVICE_ID;
-//  data152 = hDHT;
-//  data152 += tDHT;
-//  data152 += freeRam();
-//  data152 += millis();
+  data = DEVICE_ID;
+  data += ";humidity:";
+  data += hDHT;
+  data += ";temperature:";
+  data += tDHT;
+  data += ";freeRam:";
+  data += freeRam();
+  data += ";millis:";
+  data += millis();
 
-   Serial.println("sending: 152");
- //   trans.writeData(data152);
-    trans.println(data152);
-//
-    Serial.println(data152);
+//  trans.writeData(data151); 
+   Serial.print("sending: ");
+    Serial.println(data);
+    trans.println(data);
+//    Serial.println(data);
   // Serial.println(freeRam());
 }

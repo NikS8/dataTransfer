@@ -24,7 +24,8 @@ EthernetServer httpServer(80);
 #define GT_PRINT_MODE   // для отправки через print
 #define GT_STREAM_MODE  // STREAM_MODE нужен для работы GBUS
 #include <GyverTransfer.h>
-GyverTransfer<2, GT_TRX, 2400, 20> trans;
+GyverTransfer<2, GT_TRX, 2400, 100> trans;
+//String data;
 
 //	Блок TIME  ----------------------------------------------------------------
 #define RESET_UPTIME_TIME 43200000  //  = 30 * 24 * 60 * 60 * 1000 

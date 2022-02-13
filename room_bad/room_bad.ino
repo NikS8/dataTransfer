@@ -19,7 +19,6 @@
 
 //  Блок libraries  -----------------------------------------------------------
 #include "dhtnew.h"
-#include "mString.h"
 
 //  Блок settings  ------------------------------------------------------------
 #include "room_bad_init.h"
@@ -55,14 +54,14 @@ void isr() {
             loop
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void loop() {
-     mString<10> data; 
+     String data; 
 //    uint16_t data;
   if (trans.available()) {
 
  //       Serial.print(trans.readString()); 
     data = trans.readString(); 
-        Serial.println(data.buf); 
-  if (data.toInt(0) == 152) {
+        Serial.println(data); 
+  if (data.toInt() == DEVICE_ID) {
     Serial.println("data == 152");
   
  //   thDHT();
