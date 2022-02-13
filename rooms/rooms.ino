@@ -64,67 +64,60 @@ void setup() {
 }
 
 // GyverTransfer читает в прерывании
-void isr() {
-  trans.tickISR();
-}
+//void isr() {
+//  trans.tickISR();
+//}
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             loop
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void loop() {
-  // здесь принимаются данные
-  // если это аппаратный сериал - слишком часто его опрашивать даже не нужно
-String data;
-//data = 15;
-  // отправляем запрос на адрес 3 каждые 5 секунд
   static uint32_t tmr;
   if (millis() - tmr > 15000) {
     tmr = millis();
-    Serial.println(millis());
-    data = 151;
- //   trans.writeData("1");
-    trans.println(data);
-    Serial.print("send request=");
-   Serial.println(data);
 
-  }
-    // отправляем запрос на адрес 3 каждые 5 секунд
-  static uint32_t tmr13;
- if (millis() - tmr13 > 19000) {
-    tmr13 = millis();
- //       Serial.println(millis());
-     data = 152;
+    trans.println(151);
+    Serial.print("send request = ");
+   Serial.println(151);
+//delay(10);
 
-    trans.println(data);
-         Serial.print("send request = ");
-   Serial.println(data);
-
-//    trans.println(DEVICE_FROM_152);
-  }
-//   String dataIN;
-//  data = "a";
-  if (trans.available()) {
-//        Serial.print(trans.readData(dataIN)); 
-    Serial.println(trans.readString()); 
- //      data = trans.readString(); 
- //       Serial.println(data); 
-//    if (trans.readData(data)) {
-//      Serial.print(" from: ");
- //     Serial.println(dataIN);
-
-      Serial.println();
-//    } else {
- 
-//    }
+    if (trans.available()) {
+    String data = trans.readString(); 
+    String data151 = data;
+    Serial.print("   from ");
+    Serial.print(data151.substring(0,3));
+     Serial.print(" :  ");
+     Serial.println(data151);
 
     trans.clearBuffer(); // обязательно вручную чистим буфер
-}
+    }
+
+delay(3000);
+
+    trans.println(152);
+    Serial.print("send request = ");
+   Serial.println(152);
+//delay(10);
+
+    if (trans.available()) {
+    String data = trans.readString(); 
+    String data152 = data;
+     Serial.print("   from ");
+    Serial.print(data152.substring(0,3));
+     Serial.print(" :  ");
+    Serial.println(data152);
+
+    trans.clearBuffer(); // обязательно вручную чистим буфер
+    }
+
+  }
 //  read();
 
 //  realTimeService();
 
 	resetChecker();
 }
+
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             info
