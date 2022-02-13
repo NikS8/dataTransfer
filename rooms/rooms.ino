@@ -43,8 +43,6 @@
 #include <SPI.h>
 #include <Ethernet.h>  //  httpServer (40151) pins D10,D11,D12,D13
 
-#include <mString.h>
-
 
 //  Блок settings  ------------------------------------------------------------
 #include "rooms_init.h"
@@ -76,77 +74,51 @@ void isr() {
 void loop() {
   // здесь принимаются данные
   // если это аппаратный сериал - слишком часто его опрашивать даже не нужно
-  bus.tick();
-
+String data;
+//data = 15;
   // отправляем запрос на адрес 3 каждые 5 секунд
   static uint32_t tmr;
-  if (millis() - tmr > 5000) {
+  if (millis() - tmr > 15000) {
     tmr = millis();
-    Serial.println("send request");
-    bus.sendRequest(DEVICE_FROM_151);
+    Serial.println(millis());
+    data = 151;
+ //   trans.writeData("1");
+    trans.println(data);
+    Serial.print("send request=");
+   Serial.println(data);
+
   }
     // отправляем запрос на адрес 3 каждые 5 секунд
   static uint32_t tmr13;
- if (millis() - tmr13 > 7000) {
+ if (millis() - tmr13 > 19000) {
     tmr13 = millis();
-    Serial.println("send request");
-    bus.sendRequest(DEVICE_FROM_152);
+ //       Serial.println(millis());
+     data = 152;
+
+    trans.println(data);
+         Serial.print("send request = ");
+   Serial.println(data);
+
+//    trans.println(DEVICE_FROM_152);
   }
- // mString<50> data151;
- // data151 = "";
+//   String dataIN;
+//  data = "a";
+  if (trans.available()) {
+//        Serial.print(trans.readData(dataIN)); 
+    Serial.println(trans.readString()); 
+ //      data = trans.readString(); 
+ //       Serial.println(data); 
+//    if (trans.readData(data)) {
+//      Serial.print(" from: ");
+ //     Serial.println(dataIN);
 
-  // ждём ответа от 3
-  // пытаемся достучаться через таймаут 500мс 3 раза
-  byte state151 = bus.waitAck(DEVICE_FROM_151, 3, 500);
-  switch (state151) {
-    case ACK_IDLE: //Serial.println("idle");
-      break;
-    case ACK_WAIT: //Serial.println("wait");
-      break;
-    case ACK_ERROR: Serial.println("ack error");
-      break;
-    case ACK_ONLY: Serial.println("got ack");
-      break;
-    case ACK_DATA: Serial.print("got data: ");
-      // читаем и выводим
-      byte data151;
-      bus.readData(data151);
-      Serial.println(data151);
+      Serial.println();
+//    } else {
+ 
+//    }
 
-          Serial.print("request from: ");
-    Serial.println(bus.getTXaddress());
-  data151 = "";
-
-      break;
-  }
-
-//  mString<50> data152;
-  //data152 = "";
-
-  // ждём ответа от 13
-  // пытаемся достучаться через таймаут 500мс 3 раза
-  byte state152 = bus.waitAck(DEVICE_FROM_152, 3, 500);
-  switch (state152) {
-    case ACK_IDLE: //Serial.println("idle");
-      break;
-    case ACK_WAIT: //Serial.println("wait");
-      break;
-    case ACK_ERROR: Serial.println("ack error");
-      break;
-    case ACK_ONLY: Serial.println("got ack");
-      break;
-    case ACK_DATA: Serial.print("got data: ");
-      // читаем и выводим
-      byte data152;
-      trans.readData(data152);
-      Serial.println(data152);
-
-          Serial.print("request from: ");
-    Serial.println(bus.getTXaddress());
-
-      break;
-  }
-
+    trans.clearBuffer(); // обязательно вручную чистим буфер
+}
 //  read();
 
 //  realTimeService();

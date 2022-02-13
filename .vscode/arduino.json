@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:pro",
-    "port": "/dev/cu.SLAB_USBtoUART",
+    "port": "/dev/tty.SLAB_USBtoUART",
     "programmer": "arduino:avrisp",
     "sketch": "rooms/rooms.ino",
     "configuration": "cpu=16MHzatmega328"

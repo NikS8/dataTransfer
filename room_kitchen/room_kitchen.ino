@@ -18,8 +18,8 @@
 #define VERSION 1
 
 //  Блок libraries  -----------------------------------------------------------
-#include <mString.h>
 #include "dhtnew.h"
+#include "mString.h"
 
 //  Блок settings  ------------------------------------------------------------
 #include "room_kitchen_init.h"
@@ -54,24 +54,22 @@ void isr() {
             loop
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void loop() {
-// здесь принимаются данные
-  // если это аппаратный сериал - слишком часто его опрашивать даже не нужно
-  bus.tick();
+    mString<10> data; 
+//    uint16_t data;
+  if (trans.available()) {
 
-  // приняли данные
-  if (bus.gotRequest()) {
-    Serial.print("request from: ");
-    Serial.println(bus.getTXaddress());
-
-    // ответили
-    //bus.sendAck(bus.getTXaddress());
-
-    // ИЛИ отправили дату в ответ
-
-    thDHT();
+ //       Serial.print(trans.readString()); 
+    data = trans.readString(); 
+        Serial.println(data.buf); 
+  if (data.toInt(0) == 151) {
+    Serial.println("data == 151");
+  
+ //   thDHT();
     
-    // отправляем каждые 2 секунды
     send();
+    }
+    trans.clearBuffer(); // обязательно вручную чистим буфер
+
   }
 
 	resetChecker();
