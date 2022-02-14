@@ -63,61 +63,45 @@ void setup() {
   attachInterrupt(0, isr, CHANGE);
 }
 
-// GyverTransfer читает в прерывании
-//void isr() {
-//  trans.tickISR();
-//}
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             loop
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 void loop() {
-  static uint32_t tmr;
-  if (millis() - tmr > 15000) {
-    tmr = millis();
+
+    if (trans.available()) {
+    String data = trans.readString(); 
+     Serial.print("   from ");
+    Serial.print(data.substring(8,11));
+     Serial.print(" :  ");
+    Serial.print(data);
+//  Serial.println(data.length());		
+
+    trans.clearBuffer(); // обязательно вручную чистим буфер
+    }
+
+
+  if (myTimer1.isReady()){
 
     trans.println(151);
-    Serial.print("send request = ");
-   Serial.println(151);
+//    Serial.print("send request = ");
+//   Serial.println(151);
 //delay(10);
-
-    if (trans.available()) {
-    String data = trans.readString(); 
-    String data151 = data;
-    Serial.print("   from ");
-    Serial.print(data151.substring(0,3));
-     Serial.print(" :  ");
-     Serial.println(data151);
-
-    trans.clearBuffer(); // обязательно вручную чистим буфер
-    }
-
-delay(3000);
+  }
+  
+  if (myTimer2.isReady()){
 
     trans.println(152);
-    Serial.print("send request = ");
-   Serial.println(152);
+//    Serial.print("send request = ");
+//   Serial.println(152);
 //delay(10);
-
-    if (trans.available()) {
-    String data = trans.readString(); 
-    String data152 = data;
-     Serial.print("   from ");
-    Serial.print(data152.substring(0,3));
-     Serial.print(" :  ");
-    Serial.println(data152);
-
-    trans.clearBuffer(); // обязательно вручную чистим буфер
-    }
-
   }
+  
 //  read();
 
 //  realTimeService();
 
 	resetChecker();
 }
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
             info

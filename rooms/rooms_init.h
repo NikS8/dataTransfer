@@ -24,12 +24,15 @@ EthernetServer httpServer(80);
 #define GT_PRINT_MODE   // для отправки через print
 #define GT_STREAM_MODE  // STREAM_MODE нужен для работы GBUS
 #include <GyverTransfer.h>
-GyverTransfer<2, GT_TRX, 2400, 100> trans;
+GyverTransfer<2, GT_TRX, 5200, 250> trans;
 //String data;
 
 //	Блок TIME  ----------------------------------------------------------------
 #define RESET_UPTIME_TIME 43200000  //  = 30 * 24 * 60 * 60 * 1000 
 // reset after 30 days uptime
+#include "GyverTimer.h"   // подключаем библиотеку
+GTimer myTimer1(MS, 5000);
+GTimer myTimer2(MS, 7000);
 
 int16_t upError = 0;
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

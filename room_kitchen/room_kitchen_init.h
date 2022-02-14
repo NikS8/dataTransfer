@@ -1,20 +1,15 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*\
-            settings bedbath
+            settings room_kitchen
 \*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 //	#include "room_kitchen_init.h"
 //  Блок GBUS   -----------------------------------------------------------
 // принимаем запрос и отправляем в ответ данные с АЦП
 #define GT_PRINT_MODE   // для отправки через print
 #define GT_STREAM_MODE  // STREAM_MODE нужен для работы GBUS
+#define GT_CLI        // для лучшей связи на высокой скорости
 #include <GyverTransfer.h>
-GyverTransfer<2, GT_TRX, 2400, 100> trans;
+GyverTransfer<2, GT_TRX, 5200, 120> trans;
 
-//  Блок Energy Monitor  ------------------------------------------------------
-/*
-EnergyMonitor emon1;
-EnergyMonitor emon2;
-EnergyMonitor emon3;
-*/
 //  Блок DHT  -----------------------------------------------------------------
 #define pinDHT_VCC 11    // пин VCC сенсора 
 //#define pinDHT_GND 3    // пин GND сенсора 
